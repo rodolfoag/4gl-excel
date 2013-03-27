@@ -1,7 +1,7 @@
 4gl-excel
 =========
 
-A simple library to create an well formatted Excel file from Progress 4GL.
+A simple library to create an well formatted Excel file using Progress 4GL.
 
 How it works
 ------------
@@ -19,7 +19,7 @@ First, you have to define a temp-table that's going to be the data source for th
 Example
 -------
 
-    {include/relat-excel.i}
+    {4gl-excel.i}
 
     def var c-csv-file as char no-undo.
     def var c-xls-file as char no-undo. /* will contain the XLS file path created */
