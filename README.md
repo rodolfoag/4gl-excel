@@ -19,4 +19,27 @@ First, you have to define a temp-table that's going to be the data source for th
 Example
 -------
 
-> {include/relat-excel.i}
+    {include/relat-excel.i}
+
+    def var c-csv-file as char no-undo.
+    def var c-xls-file as char no-undo. /* will contain the XLS file path created */
+
+    def temp-table tt-data /* Data-Source */
+        field cust-name as char column-label "Name"
+        field cust-age  as int  column-label "Age".
+
+    create tt-data.
+    assign tt-data.cust-name = "Customer Name 1"
+           tt-data.cust-age  = 22.
+    
+    create tt-data.
+    assign tt-data.cust-name = "Customer Name 2"
+           tt-data.cust-age  = 19.
+
+    run pi-cria-arquivo-csv(input  buffer tt-data:handle,
+                            input  session:temp-directory + "file",
+                            output c-csv-file).
+
+    run pi-cria-arquivo-xls(input  buffer tt-data:handle,
+                            input  c-csv-file,
+                            output c-xls-file).
