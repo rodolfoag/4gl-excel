@@ -32,7 +32,7 @@ end.
 /* Gera um arquivo csv com os dados do relatorio */
 procedure pi-cria-arquivo-csv:
     def input  parameter p-buffer  as handle no-undo. /* buffer da temp-table com os dados do relatorio */
-    def input  parameter p-arquivo as char   no-undo. /* nome completo do arquivo destino do relatorio */
+    def input  parameter p-arquivo as char   no-undo. /* nome completo do arquivo destino do relatorio (.xlsx) */
     def output parameter p-arq-csv as char   no-undo. /* arquivo CSV com os dados do relatorio */
 
     def var i-cont          as int    no-undo.
@@ -43,7 +43,7 @@ procedure pi-cria-arquivo-csv:
         assign p-arq-csv = entry(num-entries(program-name(1),"\"), program-name(1), "\") + ".csv".
     end.
     else do:
-        assign p-arq-csv = replace(p-arquivo, ".xls", ".csv").
+        assign p-arq-csv = replace(p-arquivo, ".xlsx", ".csv").
     end.
 
 
@@ -183,8 +183,8 @@ procedure pi-cria-arquivo-xls:
         run pi-customiza-excel(input ch-excel).
 
     /* Salva o arquivo XLS */
-    assign p-arq-xls = replace(p-arq-csv, ".csv", ".xls").
-    ch-wrk:SaveAs(p-arq-xls,-4143,"","",false,false,).
+    assign p-arq-xls = replace(p-arq-csv, ".csv", ".xlsx").
+    ch-wrk:SaveAs(p-arq-xls,51,"","",false,false,). /* 51 = xlOpenXMLWorkbook */
 
     /* Encerra excel e elimna handles */
     ch-excel:DisplayAlerts = yes.
