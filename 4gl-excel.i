@@ -186,11 +186,15 @@ procedure pi-cria-arquivo-xls:
     assign p-arq-xls = replace(p-arq-csv, ".csv", ".xls").
     ch-wrk:SaveAs(p-arq-xls,-4143,"","",false,false,).
 
-    /* Encerra excel e elimna handle */
+    /* Encerra excel e elimna handles */
     ch-excel:DisplayAlerts = yes.
     ch-excel:quit().
+    release object ch-wrk.
+    release object ch-query.
     release object ch-excel.
-    assign ch-excel = ?.
+    assign ch-wrk   = ?
+           ch-query = ?
+           ch-excel = ?.
 
     /* Elimina arquivo csv gerado */
     os-delete value(p-arq-csv) no-error.
