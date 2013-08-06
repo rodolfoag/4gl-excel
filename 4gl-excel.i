@@ -8,7 +8,9 @@
  *             que contera os dados do relatorio, os valores de column-label e format
  *             sao utilizados para formatacao dos campos e a linha de cabecalho.
  *
- * Current Version: 0.1.0
+ * Current Version: 0.1.1
+ * Release: Fix when we run pi-cria-arquivo-csv procedure without p-arquivo variable.
+ *          Consider the format from logical variable
  */
 
 
@@ -19,7 +21,7 @@ function fi-fieldString returns char (p-field as handle):
     if string(p-field:buffer-value) = ? then
         assign c-valor = "".
 
-    else if p-field:data-type = "decimal" then
+    else if p-field:data-type = "decimal"  or p-field:data-type = "logical" then
         assign c-valor = string(p-field:buffer-value, p-field:format).
 
     else
@@ -40,7 +42,9 @@ procedure pi-cria-arquivo-csv:
 
     /* Nome do Arquivo de Destino */
     if p-arquivo = "" then do:
-        assign p-arq-csv = entry(num-entries(program-name(1),"\"), program-name(1), "\") + ".csv".
+      assign p-arquivo = replace(program-name(1),"/","\").
+      assign p-arquivo = entry(num-entries(p-arquivo,"\"),p-arquivo,"\").
+      assign p-arquivo = entry(1,p-arquivo,".").
     end.
     else do:
         assign p-arq-csv = replace(p-arquivo, ".xlsx", ".csv").
