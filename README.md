@@ -43,3 +43,7 @@ Example
     run pi-cria-arquivo-xls(input  buffer tt-data:handle,
                             input  c-csv-file,
                             output c-xls-file).
+                            
+## License
+
+See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).                            
